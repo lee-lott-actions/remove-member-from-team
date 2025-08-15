@@ -49,7 +49,7 @@ This GitHub Action removes a GitHub user from a specified team in an organizatio
        steps:
          - name: Remove Member From Team
            id: remove-member
-           uses: la-actions/remove-member-from-team@v1
+           uses: lee-lott-actions/remove-member-from-team@v1
            with:
              member-name: ${{ github.event.inputs.member-name }}
              team-name: ${{ github.event.inputs.team-name }}
