@@ -1,6 +1,6 @@
 name: Remove Member From Team
 description: Removes a GitHub user from a specified team in an organization using the GitHub API.
-author: Louisiana Office of Technology Services
+author: Lee Lott
 
 inputs:
   member-name:
