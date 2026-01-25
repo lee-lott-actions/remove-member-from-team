@@ -62,11 +62,11 @@ jobs:
           MOCK_API: http://127.0.0.1:3000
 
       - name: Check Integration Test Result
+        shell: pwsh
         run: |
-          if [[ "${{ steps.integration-tests.outputs.result }}" == "success" ]]; then
-            echo "Test passed: Integration test simulated successfully."
-          else
-            echo "Test failed: ${{ steps.create.outputs.error-message }}"
+          if ("${{ steps.integration-tests.outputs.result }}" -eq "success") {
+            Write-Host "Test passed: Integration test simulated successfully."
+          } else {
+            Write-Host "Test failed: ${{ steps.integration-tests.outputs.error-message }}"
             exit 1
-          fi
-        shell: bash
+          }
