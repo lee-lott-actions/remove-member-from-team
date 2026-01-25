@@ -30,6 +30,6 @@ runs:
     - name: Remove Member from Team
       id: action
       run: |
-        source ${{ github.action_path }}/action.sh
-        remove_member_from_team "${{ inputs.member-name }}" "${{ inputs.team-name }}" "${{ inputs.token }}" "${{ inputs.owner }}"
+        . "${{ github.action_path }}/action.ps1"
+        Remove-MemberFromTeam "${{ inputs.member-name }}" "${{ inputs.team-name }}" "${{ inputs.token }}" "${{ inputs.owner }}"
       shell: bash
