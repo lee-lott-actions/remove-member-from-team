@@ -63,4 +63,17 @@ Describe "Remove-MemberFromTeam" {
         $output | Should -Contain "result=failure"
         $output | Should -Contain "error-message=Missing required parameters: member-name, team-name, token, and owner must be provided."
     }
+	
+	It "writes result=failure and error-message on exception" {
+	Mock Invoke-WebRequest { throw "API Error" }
+
+	try {
+		Remove-MemberFromTeam -MemberName $MemberName -TeamName $TeamName -Token $Token -Owner $Owner
+	} catch {}
+
+	$output = Get-Content $env:GITHUB_OUTPUT
+	$output | Should -Contain "result=failure"
+	$output | Where-Object { $_ -match "^error-message=Error: Failed to remove $MemberName from team $TeamName\. Exception:" } |
+		Should -Not -BeNullOrEmpty
+	}
 }
