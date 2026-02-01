@@ -45,9 +45,9 @@ function Remove-MemberFromTeam {
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
         }
     } catch {
-        $httpStatus = $_.Exception.Response.StatusCode.value__
-        Write-Host "Error: Failed to remove $MemberName from team $TeamName. HTTP Status: $httpStatus"
-        Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=Failed to remove member $MemberName from team $TeamName. HTTP Status: $httpStatus"
-        Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
+		$errorMsg = "Error: Failed to remove $MemberName from team $TeamName. Exception: $($_.Exception.Message)"
+		Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
+		Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"
+		Write-Host $errorMsg
     }
 }
