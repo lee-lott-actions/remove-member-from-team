@@ -37,7 +37,7 @@ Describe "Remove-MemberFromTeam" {
 	        Remove-MemberFromTeam -MemberName $MemberName -TeamName $TeamName -Token $Token -Owner $Owner
 	        $output = Get-Content $env:GITHUB_OUTPUT
 	        $output | Should -Contain "result=failure"
-	        $output | Should -Contain "error-message=Error: Failed to remove member $MemberName from team $TeamName. HTTP Status: 404"
+	        $output | Should -Contain "error-message=Error: Failed to remove $MemberName from team $TeamName. HTTP Status: 404"
 	    }
 	}
 
