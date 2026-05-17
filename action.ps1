@@ -16,9 +16,7 @@ function Remove-MemberFromTeam {
         Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
         return
     }
-
-    Write-Host "Attempting to remove member '$MemberName' from team '$TeamName' in organization '$Owner'"
-
+	
     # Use MOCK_API if set, otherwise default to GitHub API
     $apiBaseUrl = $env:MOCK_API
     if (-not $apiBaseUrl) { $apiBaseUrl = "https://api.github.com" }
@@ -31,16 +29,17 @@ function Remove-MemberFromTeam {
     }
 
     try {
-        Write-Host "Sending DELETE request to $uri"
-        $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method Delete
+        Write-Host "Attempting to remove member '$MemberName' from team '$TeamName' in organization '$Owner'"
+        $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method Delete -SkipHttpErrorCheck
 
         if ($response.StatusCode -eq 204) {
             Write-Host "Successfully removed $MemberName from team $TeamName"
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=success"
         } else {
-            Write-Host "Error: Failed to remove $MemberName from team $TeamName. HTTP Status: $($response.StatusCode)"
-            Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=Failed to remove member $MemberName from team $TeamName. HTTP Status: $($response.StatusCode)"
+			$errorMsg = "Error: Failed to remove $MemberName from team $TeamName. HTTP Status: $($response.StatusCode)" 
             Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
+            Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"
+			Write-Host $errorMsg
         }
     } catch {
 		$errorMsg = "Error: Failed to remove $MemberName from team $TeamName. Exception: $($_.Exception.Message)"
