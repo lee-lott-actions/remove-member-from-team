@@ -32,4 +32,8 @@ runs:
       shell: pwsh
       run: |
         . "${{ github.action_path }}/action.ps1"
-        Remove-MemberFromTeam "${{ inputs.member-name }}" "${{ inputs.team-name }}" "${{ inputs.token }}" "${{ inputs.owner }}"
+        Remove-MemberFromTeam `
+          -MemberName "${{ inputs.member-name }}" `
+          -TeamName "${{ inputs.team-name }}" `
+          -Token "${{ inputs.token }}" `
+          -Owner "${{ inputs.owner }}"
